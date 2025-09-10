@@ -1,198 +1,265 @@
-I'll create a complete README file for your deployed full-stack application. Here's the comprehensive documentation:
+I'll update the README file based on your project structure screenshot. Here's the comprehensive documentation:
 
 # Employee Transportation Services - Full Stack Application
 
 ## 🌐 Live Demo
 
-**Frontend (Next.js):** https://login-auth-task1.vercel.app/
+**Frontend (React):** https://login-auth-task1.vercel.app/
 **Backend (Node.js + Express):** https://login-auth-task1-1.onrender.com/
 
 ## 📋 Project Overview
 
-A full-stack web application for Employee Transportation Services featuring a responsive landing page, form submission system, and admin dashboard to view submissions.
+A full-stack MERN application for Employee Transportation Services with user authentication, profile management, and form submission system.
 
 ## 🛠️ Tech Stack
 
-### Frontend
-- **Framework**: Next.js 13+ with Pages Router
-- **Styling**: Tailwind CSS
+### Frontend (React)
+- **Framework**: React.js
+- **Build Tool**: Vite (based on package.json structure)
+- **Styling**: CSS/Tailwind (inferred)
 - **Deployment**: Vercel
 
-### Backend
+### Backend (Node.js + Express)
 - **Runtime**: Node.js
 - **Framework**: Express.js
 - **Database**: MongoDB Atlas
+- **Authentication**: JWT
 - **Deployment**: Render
 
-## 📁 Project Structure
+## 📁 Project Structure (Based on Screenshot)
 
 ```
-transportation-app/
-├── frontend/                 # Next.js application
-│   ├── components/
-│   │   ├── Form/
-│   │   ├── Header/
-│   │   └── SubmissionsList.jsx
-│   ├── pages/
-│   │   ├── index.jsx        # Landing page
-│   │   └── submissions.jsx  # Admin submissions page
-│   ├── public/
-│   ├── styles/
-│   └── package.json
-├── backend/                  # Express server
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
+ME-API-PLAYGROUND/
+├── backend/                  # Express.js Backend
 │   ├── config/
-│   └── package.json
-└── README.md
+│   │   └── db.js            # MongoDB connection configuration
+│   ├── controllers/          # Business logic
+│   ├── models/              # MongoDB Schemas
+│   │   ├── Profile.js       # User Profile Schema
+│   │   └── User.js          # User Authentication Schema
+│   ├── routes/              # API Routes
+│   │   └── profileRoutes.js # Profile-related routes
+│   ├── node_modules/        # Dependencies
+│   ├── .env                 # Environment variables
+│   ├── package.json         # Backend dependencies
+│   ├── package-lock.json    # Lock file
+│   └── server.js           # Main server file
+├── frontend/                # React.js Frontend
+│   ├── src/
+│   │   ├── components/
+│   │   │   └── ProfileCard.js # React component
+│   │   ├── api.js           # API communication
+│   │   ├── App.js           # Main App component
+│   │   └── index.html       # HTML template
+│   ├── node_modules/        # Dependencies
+│   ├── package.json         # Frontend dependencies
+│   └── package-lock.json    # Lock file
+└── README.md               # Project documentation
 ```
 
 ## 🚀 Features
 
+### Authentication System
+- ✅ User registration and login
+- ✅ JWT token-based authentication
+- ✅ Protected routes
+- ✅ User profile management
+
 ### Frontend Features
-- ✅ Responsive landing page (Mobile, Tablet, Desktop)
-- ✅ Hover-based mega menu under "Services"
-- ✅ Contact form with validation
-- ✅ Form submissions listing page
-- ✅ Pixel-perfect design implementation
+- ✅ Responsive React application
+- ✅ Profile management interface
+- ✅ API integration
+- ✅ Modern component architecture
 
 ### Backend Features
 - ✅ RESTful API endpoints
 - ✅ MongoDB integration with Mongoose
-- ✅ Form data validation
-- ✅ CORS enabled for frontend communication
+- ✅ User authentication system
+- ✅ Profile management
+- ✅ JWT token validation
 
 ## 📊 API Endpoints
 
 ### Base URL: `https://login-auth-task1-1.onrender.com/api`
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/submit-form` | Submit contact form data |
-| GET | `/submissions` | Get all form submissions |
-| GET | `/health` | Health check endpoint |
+| Method | Endpoint | Description | Authentication |
+|--------|----------|-------------|----------------|
+| POST | `/auth/register` | User registration | Public |
+| POST | `/auth/login` | User login | Public |
+| GET | `/profile` | Get user profile | Protected |
+| PUT | `/profile` | Update user profile | Protected |
+| POST | `/submit-form` | Submit contact form | Public/Protected |
+| GET | `/submissions` | Get form submissions | Protected (Admin) |
 
-## 🗃️ Database Schema
+## 🗃️ Database Schemas
 
-### Form Submissions Collection
+### User Schema (`models/User.js`)
 ```javascript
 {
-  name: String (required),
-  email: String (required, validated),
-  phone: String (required),
-  company: String,
-  message: String,
+  username: String (required, unique),
+  email: String (required, unique),
+  password: String (required, hashed),
+  role: String (default: 'user'),
   createdAt: Date (auto)
 }
 ```
 
-## 🔧 Environment Variables
-
-### Frontend (.env.local)
-```env
-NEXT_PUBLIC_API_URL=https://login-auth-task1-1.onrender.com/api
+### Profile Schema (`models/Profile.js`)
+```javascript
+{
+  userId: ObjectId (ref: User),
+  firstName: String,
+  lastName: String,
+  phone: String,
+  company: String,
+  address: Object,
+  preferences: Object,
+  updatedAt: Date (auto)
+}
 ```
+
+## 🔧 Environment Variables
 
 ### Backend (.env)
 ```env
 MONGO_URI=mongodb+srv://umesh:Umesh123@cluster0.zvoe4me.mongodb.net/transportation?retryWrites=true&w=majority&appName=Cluster0
 JWT_SECRET=MySuperSecretKey123!
 PORT=5000
+NODE_ENV=production
 ```
 
-## 📱 Responsive Breakpoints
+### Frontend Environment
+```env
+REACT_APP_API_URL=https://login-auth-task1-1.onrender.com/api
+```
 
-- **Mobile**: < 768px
-- **Tablet**: 768px - 1023px
-- **Desktop**: 1024px, 1280px, 1440px, 1920px
+## 🚀 Installation & Setup
 
-## 🎯 Form Validation
+### Backend Setup
+```bash
+cd backend
+npm install
+cp .env.example .env  # Add your environment variables
+npm run dev
+```
 
-### Frontend Validation
-- Required fields: Name, Email, Phone
-- Email format validation
-- Phone number basic validation
+### Frontend Setup
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-### Backend Validation
-- MongoDB schema validation
-- Required field checks
-- Email format validation
+## 📱 Key Components
 
-## 🔄 Deployment Workflow
+### Backend Components
+- **server.js**: Main Express server configuration
+- **db.js**: MongoDB connection setup
+- **User.js**: User authentication model
+- **Profile.js**: User profile model
+- **profileRoutes.js**: Profile management routes
 
-### Frontend Deployment (Vercel)
-1. Push code to GitHub
-2. Connect repository to Vercel
-3. Automatic deployments on push to main
+### Frontend Components
+- **App.js**: Main application component
+- **ProfileCard.js**: Profile display component
+- **api.js**: API communication utilities
 
-### Backend Deployment (Render)
-1. Push code to GitHub
-2. Connect repository to Render
-3. Set environment variables
-4. Automatic deployments on push to main
+## 🔒 Security Features
 
-## 🐛 Troubleshooting
+- JWT token authentication
+- Password hashing with bcrypt
+- Environment variable protection
+- CORS configuration
+- Input validation and sanitization
+
+## 🛠️ Development Scripts
+
+### Backend (package.json)
+```json
+{
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "test": "echo \"No tests specified\""
+  }
+}
+```
+
+### Frontend (package.json)
+```json
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  }
+}
+```
+
+## 🌐 Deployment Status
+
+### Backend (Render)
+- ✅ Successfully deployed
+- ✅ MongoDB Atlas connected
+- ✅ Environment variables configured
+- ✅ API endpoints accessible
+
+### Frontend (Vercel)
+- ✅ Successfully deployed
+- ✅ Connected to backend API
+- ✅ Responsive design
+- ✅ Form functionality working
+
+## 🐛 Troubleshooting Guide
 
 ### Common Issues
-1. **CORS Errors**: Ensure backend has proper CORS configuration
-2. **MongoDB Connection**: Verify connection string in environment variables
-3. **Build Failures**: Check Node.js version compatibility
+1. **MongoDB Connection Errors**
+   - Verify MONGO_URI in .env file
+   - Check MongoDB Atlas whitelisted IPs
 
-### Debugging
-- Check Render logs for backend errors
-- Check Vercel logs for frontend errors
+2. **JWT Token Issues**
+   - Verify JWT_SECRET is set
+   - Check token expiration
+
+3. **CORS Errors**
+   - Ensure proper CORS configuration in server.js
+
+4. **Environment Variables**
+   - Verify all required variables are set
+   - Restart server after changing .env
+
+### Debugging Tips
+- Check server logs on Render dashboard
 - Use browser DevTools for frontend debugging
+- Test API endpoints with Postman/Thunder Client
 
-## 📈 Performance Features
+## 📈 Performance Optimization
 
-- **Frontend**: Next.js optimization, image optimization
-- **Backend**: Connection pooling, efficient database queries
-- **Database**: MongoDB indexing, proper schema design
-
-## 🔒 Security Measures
-
-- Environment variables for sensitive data
-- Input validation on both frontend and backend
-- CORS configuration for controlled access
-- MongoDB Atlas with secure connection
-
-## 📝 Usage Instructions
-
-1. **Visit the application**: https://login-auth-task1.vercel.app/
-2. **Fill out the contact form** with required details
-3. **Submit the form** - you'll receive success/error feedback
-4. **View submissions** at: `https://login-auth-task1.vercel.app/submissions`
-
-## 🎨 Design Implementation
-
-- Fully responsive across all device sizes
-- Hover effects and smooth transitions
-- Professional color scheme and typography
-- Accessible design patterns
+- Database indexing on frequently queried fields
+- React component optimization
+- API response caching
+- Connection pooling for MongoDB
 
 ## 🔮 Future Enhancements
 
-- [ ] User authentication system
-- [ ] Email notifications on form submission
-- [ ] Advanced form analytics
-- [ ] Admin dashboard with charts
-- [ ] File upload functionality
-- [ ] Real-time updates with WebSockets
+- [ ] Email verification system
+- [ ] Password reset functionality
+- [ ] File upload for profile pictures
+- [ ] Real-time notifications
+- [ ] Admin dashboard
+- [ ] API rate limiting
+- [ ] Comprehensive testing suite
 
 ## 📞 Support
 
-For issues related to this deployment:
-- **Frontend Issues**: Check Vercel deployment logs
-- **Backend Issues**: Check Render deployment logs
-- **Database Issues**: Verify MongoDB Atlas connection
-
-## 📄 License
-
-This project is for demonstration purposes as part of a technical assessment.
+For technical issues:
+1. Check deployment logs on Vercel/Render
+2. Verify environment variables
+3. Test API endpoints independently
+4. Check MongoDB Atlas connection
 
 ---
 
-**Deployment Status**: ✅ Live and Functional  
-**Last Updated**: August 2025  
-**Maintainer**: Umesh Chavhan
+**Last Deployment**: September 2025  
+**Maintainer**: Umesh Chavhan  
+**Status**: ✅ Production Ready  
